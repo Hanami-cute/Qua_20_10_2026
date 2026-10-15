@@ -412,6 +412,9 @@
 
   <header class="topbar">
     <a class="brand" href="index.html"><span>✿</span>Một món quà nhỏ</a>
+    <button class="music glass" id="musicToggle" type="button" aria-pressed="false">
+      ♫ <span>Nhạc nền</span>
+    </button>
   </header>
 
   <main>
@@ -466,7 +469,31 @@
     <span>HAPPY VIETNAMESE WOMEN'S DAY · 20.10</span>
   </footer>
 
+  <audio id="bgMusic" loop preload="none">
+    <source src="./Thang_10_cua_me.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
+    // 1. Bật và tắt nhạc nền
+    const musicToggle = document.getElementById('musicToggle');
+    const bgMusic = document.getElementById('bgMusic');
+
+    musicToggle.addEventListener('click', async () => {
+      if (bgMusic.paused) {
+        try {
+          await bgMusic.play();
+          musicToggle.setAttribute('aria-pressed', 'true');
+          musicToggle.innerHTML = '♫ <span>Tắt nhạc</span>';
+        } catch (error) {
+          alert('Chưa phát được nhạc. Hãy kiểm tra file music/nhac-nen.mp3 nhé!');
+        }
+      } else {
+        bgMusic.pause();
+        musicToggle.setAttribute('aria-pressed', 'false');
+        musicToggle.innerHTML = '♫ <span>Nhạc nền</span>';
+      }
+    });
+
     // 2. Tạo hoa rơi nhẹ nhàng
     const petalsBox = document.getElementById('petals');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
